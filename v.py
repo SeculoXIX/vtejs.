@@ -1,52 +1,57 @@
 import sys
-nome = input("Qual o nome do ser que vai fazer a reserva?")
-if nome == '':
-    print("Erro! É necessário colocar o nome.")
+#Entrada de dados
+nome_responsavel = input('Qual o nome do respónsavel da reserva: ').strip()
+if nome_responsavel == '':
+    print('Você precisa escrever o nome do respónsavel')
     sys.exit()
-checkin_dia = int(input("Qual o dia de check-in?"))
-if checkin_dia >= 31 or checkin_dia <= 0:
-    print("Erro! A data de check-in é inexistente.")
+#processamento
+check_in_dia = int(input('Qual o dia da reserva: ')) 
+if check_in_dia > 31 or check_in_dia <= 0:
+    print('Erro. data inválida')
     sys.exit()
-checkin_mes = int(input("Qual o mês de check-in?"))
-if checkin_mes >= 13 or checkin_mes <= 0:
-    print("Erro! A data de check-in é inexistente.")
+check_in_mes = int(input('Qual o mês da reserva: ')) * 30
+if check_in_mes > 360 or check_in_mes <= 29:
+    print('Erro. data inválida')
     sys.exit()
-checkin_mes1 = checkin_mes * 30
-checkin_ano = int(input("Qual o ano de check-in?"))
-if checkin_ano <= 2024:
-    print("Erro! A data de check-in é inexistente.")
+check_in_ano = int(input('Qual o ano da reserva: ')) * 360
+if check_in_ano < 365:
+    print('Erro. data inválida')
     sys.exit()
-checkin_ano1 = checkin_ano * 365
-checkout_dia = int(input("qual o dia de check-out?"))
-if checkout_dia <= checkin_dia:
-    print("Erro! A data de check-out é inválida.")
+check_out_dia = int(input('Qual o dia da saída: '))
+if check_out_dia > 31 or check_out_dia <= 0:
+    print('Erro. data inválida')
     sys.exit()
-checkout_mes = int(input("qual o mês de check-out?"))
-if checkout_mes < checkin_mes:
-    print("Erro! A data de check-out é inválida.")
+check_out_mes = int(input('Qual o mês da saída: ')) * 30
+if check_out_mes > 360 or check_out_mes <= 29:
+    print('Erro. data inválida')
     sys.exit()
-checkout_ano = int(input("qual o ano de check-out?"))
-if checkout_ano < checkin_ano:
-    print("Erro! A data de check-out é inválida.")
+check_out_ano = int(input('Qual o ano da saída: ')) * 360
+if check_out_ano < 365:
+    print('Erro. data inválida')
     sys.exit()
-soma_in = checkin_dia + checkin_mes1 + checkin_ano1
-soma_out = checkout_dia + checkout_mes + checkout_ano
-calc_soma = soma_out - soma_in
-if calc_soma < 0:
-    print("Erro! A data de check-out é maior que a data de check-in.")
+soma_in = (check_in_dia + check_in_mes + check_in_ano)
+soma_out = (check_out_dia + check_out_mes + check_out_ano)
+e_possível = soma_out - soma_in
+if e_possível <= 0:
+    print('A sua data de check-in é superior a data de check-out')
     sys.exit()
-elif checkin_dia >= 31:
-    print("Erro! É necessário colocar um dia válido.")
-    sys.exit()
-print ("Digite 1 para escolher o quarto standard \n2 para escolher o quarto premimum \n3 para escolher o quarto de luxo")
-quarto = int(input("Qual é o quarto?"))
-if quarto == 1:
-    valor_total = calc_soma * 100
-elif quarto == 2:
-    valor_total = calc_soma * 180
-elif quarto == 3:
-    valor_total = calc_soma * 250
+tipo_quarto = int(input('''Qual o tipo de quarto: 
+Digite (1) para stander 
+Digite (2) para premuim 
+Digite (3) para Luxo 
+:'''))
+calc_dias = soma_out - soma_in 
+if tipo_quarto == 1:
+    valor_dias = calc_dias * 100
+
+elif tipo_quarto == 2:
+    valor_dias = calc_dias * 180
+
+elif tipo_quarto == 3:
+    valor_dias = calc_dias * 250
+
 else:
-    print("Erro! Escolha um número de quarto válido.")
+    print('escreva um número possível para o quarto')
     sys.exit()
-print(f"valor total do quarto será {valor_total} R$.")
+#Saída de dados
+print('O valor da sua hospedagem foi de R${:.2f} você ficara no quarto luxo por {} dias'.format(valor_dias, calc_dias))
