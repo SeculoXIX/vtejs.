@@ -9,14 +9,18 @@ quantidade_de_reservas = 0
 soma_total_reservas = 0
 maior_quant_reserva = 0
 nome_reserva_mais_cara = ''
-menu = 2
+maior_tempo_de_reserva = 0
+nome_maior_tempo = ''
+menu = 1
 
 #Entrada e processamento de dados
 
-while menu != 1:
+while menu == 1:
     print('O que você quer fazer \nUma reserva [1] \nEncerra o programa[2]')
     menu = int(input(':'))
-
+    if menu == 2:
+        print("Obrigado por visitar nosso site =)")
+        break
     nome_responsavel = input('Qual o nome do respónsavel da reserva: ').strip()
     if nome_responsavel == "":
         print('Você precisa escrever o nome do respónsavel')
@@ -37,6 +41,10 @@ while menu != 1:
         quit()
     Quantida_de_dias_delta = data_checkout - data_checkin
     Quantida_de_dias = Quantida_de_dias_delta.days
+    if Quantida_de_dias > maior_tempo_de_reserva:
+        maior_tempo_de_reserva = Quantida_de_dias
+        nome_maior_tempo = nome_responsavel
+
     if Quantida_de_dias < 0:
         print('Data de check-in maior que de check-out')
         sys.exit()
@@ -57,10 +65,10 @@ Digite (2) para Premuim
 Digite (3) para Luxo 
 :'''))
     if tipo_quarto == 1:
-        quantidade_quartos = int(input('Qual a quantidade de quartos stander você quer: '))
+        quantidade_quartos = int(input('Qual a quantidade de quartos standard você quer: '))
         disponibilida_stadard -= quantidade_quartos
         if disponibilida_stadard < 0:
-            print('Não temos essa quantidade de quantos dispobívais para esse quarto')
+            print('Não temos essa quantidade de quantos disponíveis para esse quarto')
         else:
             if quantidade_quartos > maior_quant_reserva:
                 maior_quant_reserva = quantidade_quartos
@@ -70,10 +78,10 @@ Digite (3) para Luxo
     
     
     elif tipo_quarto == 2:
-        quantidade_quartos = int(input('Qual a quantidade de quartos stander você quer: '))
+        quantidade_quartos = int(input('Qual a quantidade de quartos premium você quer: '))
         disponibilida_premium -= quantidade_quartos
         if disponibilida_stadard < 0:
-            print('Não temos essa quantidade de quantos dispobívais para esse quarto')
+            print('Não temos essa quantidade de quantos disponíveis para esse quarto')
         else:
             if quantidade_quartos > maior_quant_reserva:
                 maior_quant_reserva = quantidade_quartos
@@ -82,10 +90,10 @@ Digite (3) para Luxo
             soma_total_reservas += valor_dias
 
     elif tipo_quarto == 3:
-        quantidade_quartos = int(input('Qual a quantidade de quartos stander você quer: '))
+        quantidade_quartos = int(input('Qual a quantidade de quartos luxo você quer: '))
         disponibilida_luxo -= quantidade_quartos
         if disponibilida_stadard < 0:
-            print('Não temos essa quantidade de quartos dispobívais para esse quarto')
+            print('Não temos essa quantidade de quartos disponíveis para esse quarto')
         else:
             if quantidade_quartos > maior_quant_reserva:
                 maior_quant_reserva = quantidade_quartos
@@ -93,7 +101,7 @@ Digite (3) para Luxo
             valor_dias = Quantida_de_dias * 250
             soma_total_reservas += valor_dias
     else:
-        print('Escolha um tipo de querto possível')
+        print('Escolha um tipo de quarto possível')
     quantidade_de_reservas += 1
 if quantidade_de_reservas == 0:
     media_reservas = soma_total_reservas
@@ -101,7 +109,9 @@ if quantidade_de_reservas == 0:
 else:
     media_reservas = soma_total_reservas / quantidade_de_reservas
 
-print(f'O total de reservas realizadas = {quantidade_de_reservas}')
-print(f'Soma total das reservas = {soma_total_reservas}')
-print(f'Média total das reservas = {media_reservas}')
-print(f'Maior valor de reserva foi de {maior_quant_reserva} e o respónsavel é {nome_reserva_mais_cara}')
+if quantidade_de_reservas >= 1:
+    print(f'O total de reservas realizadas = {quantidade_de_reservas}')
+    print(f'Soma total das reservas = {soma_total_reservas}')
+    print(f'Média total das reservas = {media_reservas}')
+    print(f'Maior valor de reserva foi de {maior_quant_reserva} e o responsavel é {nome_reserva_mais_cara}')
+    print(f"A maior quantida de tempo foi de {maior_tempo_de_reserva} dias. E o responsavel foi {nome_maior_tempo}")
